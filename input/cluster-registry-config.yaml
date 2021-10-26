@@ -1,0 +1,20 @@
+---
+apiVersion: imageregistry.operator.openshift.io/v1
+kind: Config
+metadata:
+  name: cluster
+spec:
+  logLevel: Normal
+  rolloutStrategy: RollingUpdate
+  operatorLogLevel: Normal
+  requests:
+    read:
+      maxWaitInQueue: 0s
+    write:
+      maxWaitInQueue: 0s
+  observedConfig: null
+  managementState: Removed
+  proxy: {}
+  unsupportedConfigOverrides: null
+  storage: {}
+  replicas: 1

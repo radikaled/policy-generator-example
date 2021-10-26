@@ -1,0 +1,37 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: PolicyGenerator
+metadata:
+  name: "my-policies-generator"
+placementBindingDefaults:
+  name: "my-policies-placement-binding"
+policyDefaults:
+  categories:
+    - "CM Configuration Management"
+  controls:
+    - "CM-2 Baseline Configuration"
+  namespace: "my-policies"
+  placement:
+    clusterSelectors:
+      name: nkimlabmngd1     
+  remediationAction: "inform"
+  severity: "low"
+  standards:
+    - "NIST SP 800-53"
+policies:
+  - name: "policy-cluster-registry-config-vmware"
+    manifests:
+      - path: "input/"
+        complianceType: "musthave"
+        patches:
+          - apiVersion: imageregistry.operator.openshift.io/v1
+            kind: Config
+            metadata:
+              name: cluster
+            spec:
+              rolloutStrategy: Recreate
+              managementState: Managed
+              storage:
+                pvc:
+                  claim: image-registry-storage
+              replicas: 1
+    disabled: true
